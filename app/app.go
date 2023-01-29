@@ -9,7 +9,7 @@ import (
 
 func Run() {
 	args := cmd.GetCmdArguments(os.Args)
-	globalConfig := config.GetConfig()
+	globalConfig := config.GetConfig().Config
 	logger := logging.GetTextLogger(args.LogLevel).Logger
 	logger.Info("app started")
 }
