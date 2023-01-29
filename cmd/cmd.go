@@ -17,7 +17,7 @@ func debugCmdArgs(logger *logrus.Logger) {
 }
 
 func GetCmdArguments(args []string) *CmdArguments {
-	logLevel := flag.String("loglevel", "debug", "log level e.g. <panic | fatal | error | warning | info | debug | trace >")
+	logLevel := flag.String("loglevel", "debug", "log level e.g. [panic | fatal | error | warning | info | debug | trace]")
 	flag.Parse()
 	logger := logging.GetTextLogger(*logLevel).Logger
 	flag.Usage = func() {
