@@ -1,7 +1,9 @@
 package config
 
 import (
+	"fmt"
 	"github.com/go-redis/redis/v8"
+	"os"
 	"sync"
 )
 
@@ -19,7 +21,14 @@ type Conf struct {
 }
 
 func initConfig() SingletonConfig {
-	return SingletonConfig{}
+	return SingletonConfig{
+		Config: &Conf{
+			Redis: &redis.Options{
+				Addr:     fmt.Sprintf("%s:%s", os.Getenv("REDIS_HOST"), os.Getenv("REDIS_PORT")),
+				Password: os.Getenv("REDIS_PASSWORD"),
+			},
+		},
+	}
 }
 
 func GetConfig() SingletonConfig {
