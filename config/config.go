@@ -22,7 +22,7 @@ func initConfig() SingletonConfig {
 	return SingletonConfig{}
 }
 
-func GetGlobalConfig() SingletonConfig {
+func GetConfig() SingletonConfig {
 	once.Do(
 		func() {
 			config = initConfig()
