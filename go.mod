@@ -1,4 +1,4 @@
-module grt
+module "github.com/vspaz/grt"
 
 go 1.19
 
