@@ -8,11 +8,11 @@ import (
 )
 
 func ConfigureMiddleware(log *logrus.Logger) *chi.Mux {
-	router := chi.NewRouter()
-	router.Use(middleware.Recoverer)
-	router.Use(middleware.RealIP)
-	router.Use(middleware.RequestID)
-	router.Use(middleware.Heartbeat("/ping"))
-	router.Use(render.SetContentType(render.ContentTypeJSON))
-	return router
+	mux := chi.NewRouter()
+	mux.Use(middleware.Recoverer)
+	mux.Use(middleware.RealIP)
+	mux.Use(middleware.RequestID)
+	mux.Use(middleware.Heartbeat("/ping"))
+	mux.Use(render.SetContentType(render.ContentTypeJSON))
+	return mux
 }
