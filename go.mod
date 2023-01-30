@@ -1,8 +1,9 @@
-module "github.com/vspaz/grt"
+module github.com/vspaz/grt
 
 go 1.19
 
 require (
+	github.com/go-chi/chi/v5 v5.0.8
 	github.com/go-chi/render v1.0.2
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/sirupsen/logrus v1.9.0
