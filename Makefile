@@ -2,7 +2,7 @@ BINARY_NAME=grt
 
 all: build
 build:
-	go build -o $(BINARY_NAME) main.go
+	go build -ldflags="-s -w" -o $(BINARY_NAME) main.go; upx grt
 
 .PHONY: test
 test:
