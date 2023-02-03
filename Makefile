@@ -1,16 +1,15 @@
-BINARY_NAME=grt
+binaryName:="grt-"`git rev-parse --short HEAD`
 
 all: build
 build:
-	go build -ldflags="-s -w" -o $(BINARY_NAME) main.go; upx grt
-
+	go build -ldflags="-s -w -X main.headRev=${binaryName}" -o $(binaryName) main.go; upx $(binaryName)
 .PHONY: test
 test:
 	go test -race -v
 
 .PHONY: clean
 clean:
-	rm -f $(BINARY_NAME)
+	rm -f $(binaryName)
 
 .PHONY: style-fix
 style-fix:
