@@ -5,6 +5,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/sirupsen/logrus"
+	"github.com/vspaz/simplelogger/pkg/logging"
 	"net/http"
 	"strconv"
 	"time"
@@ -27,6 +28,7 @@ func RegisterHandlers(mux *chi.Mux) *chi.Mux {
 	// apiV1Prefix := "/api/v1/"
 	mux.Get("/ping/", Router{}.GetHealthStatus)
 	mux.Handle("/metrics/", promhttp.Handler())
+	logging.GetTextLogger().Logger.Info("handlers are registered: 'ok'.")
 	return mux
 }
 
