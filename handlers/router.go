@@ -7,6 +7,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"net/http"
 	"strconv"
+	"time"
 )
 
 type Router struct {
@@ -30,5 +31,12 @@ func RegisterHandlers(mux *chi.Mux) *chi.Mux {
 }
 
 func (r *Router) StartServer(mux *chi.Mux) {
-
+	grtServer := &http.Server{
+		Addr:         ":8080",
+		Handler:      http.TimeoutHandler(mux, time.Second*10, "timeout occured"),
+		ReadTimeout:  10,
+		WriteTimeout: 10,
+		IdleTimeout:  10,
+	}
+	grtServer.ListenAndServe()
 }

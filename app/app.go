@@ -18,4 +18,6 @@ func Run(binaryName string) {
 	logger.Info(globalConfig)
 	mux := handlers.ConfigureMiddleware(logger)
 	mux = handlers.RegisterHandlers(mux)
+	router := handlers.Router{}
+	router.StartServer(mux)
 }
