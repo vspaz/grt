@@ -8,13 +8,14 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func ConfigureMiddleware(log *logrus.Logger) *chi.Mux {
+func ConfigureMiddleware(loggger *logrus.Logger) *chi.Mux {
 	mux := chi.NewRouter()
 	mux.Use(middleware.Recoverer)
 	mux.Use(middleware.RealIP)
 	mux.Use(middleware.RequestID)
-	mux.Use(logger.Logger("http-log", log))
+	mux.Use(logger.Logger("http-loggger", loggger))
 	mux.Use(middleware.Heartbeat("/ping"))
 	mux.Use(render.SetContentType(render.ContentTypeJSON))
+	loggger.Info("middleware is configured: 'ok'.")
 	return mux
 }
