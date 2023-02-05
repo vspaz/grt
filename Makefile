@@ -2,7 +2,7 @@ binaryName:="grt-"`git rev-parse --short HEAD`
 
 all: build
 build:
-	go build -ldflags="-X main.binaryName=$(binaryName) -s -w" -o $(binaryName) main.go; upx $(binaryName)
+	go build -ldflags="-X main.binaryName=$(binaryName) -s -w" -o $(binaryName) main.go; # upx $(binaryName)
 .PHONY: test
 test:
 	go test -race -v

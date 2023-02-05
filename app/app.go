@@ -3,6 +3,7 @@ package app
 import (
 	"github.com/vspaz/grt/cmd"
 	"github.com/vspaz/grt/config"
+	"github.com/vspaz/grt/handlers"
 	"github.com/vspaz/simplelogger/pkg/logging"
 	"os"
 )
@@ -14,6 +15,7 @@ func Run(binaryName string) {
 	pid := os.Getpid()
 	logger.Infof("starting server pid='%d'", pid)
 	logger.Infof("server build, ver='%s'", binaryName)
-	logger.Info("app started")
 	logger.Info(globalConfig)
+	mux := handlers.ConfigureMiddleware(logger)
+	mux = handlers.RegisterHandlers(mux)
 }

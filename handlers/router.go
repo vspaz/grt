@@ -22,9 +22,13 @@ func (r *Router) Get(response http.ResponseWriter, request *http.Request) {
 	response.Write(okBody)
 }
 
-func RegisterHandlers(mux *chi.Mux, handlers *Router) *chi.Mux {
+func RegisterHandlers(mux *chi.Mux) *chi.Mux {
 	// apiV1Prefix := "/api/v1/"
 	mux.Get("/ping/", Router{}.GetHealthStatus)
 	mux.Handle("/metrics/", promhttp.Handler())
 	return mux
+}
+
+func (r *Router) StartServer(mux *chi.Mux) {
+
 }
