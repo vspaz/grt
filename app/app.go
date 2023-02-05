@@ -11,7 +11,9 @@ func Run(binaryName string) {
 	args := cmd.GetCmdArguments(os.Args)
 	globalConfig := config.GetConfig().Config
 	logger := logging.GetTextLogger(args.LogLevel).Logger
-	logger.Infof("starting server, ver='%s'", binaryName)
+	pid := os.Getpid()
+	logger.Infof("starting server pid='%d'", pid)
+	logger.Infof("server build, ver='%s'", binaryName)
 	logger.Info("app started")
 	logger.Info(globalConfig)
 }
