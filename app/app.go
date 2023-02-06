@@ -16,12 +16,8 @@ func Run(binaryName string) {
 		Logger: logger,
 		Conf:   globalConfig,
 	}
-	pid := os.Getpid()
-	logger.Infof("starting server pid='%d'", pid)
 	logger.Infof("server build, ver='%s'", binaryName)
-	logger.Info(globalConfig)
 	mux := handlers.ConfigureMiddleware(logger)
 	mux = handlers.RegisterHandlers(mux)
-
 	router.StartServer(mux)
 }

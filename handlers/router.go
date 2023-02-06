@@ -47,6 +47,7 @@ func (r *Router) handleShutDownGracefully(server *http.Server) {
 	signal.Notify(signalChannel, signals...)
 	r.Logger.Infof("'%s' signal received, stopping server...", <-signalChannel)
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Minute)
+
 	defer cancel()
 
 	if err := server.Shutdown(ctx); err != nil {
@@ -63,6 +64,8 @@ func (r *Router) StartServer(mux *chi.Mux) {
 		IdleTimeout:  r.Conf.HttpServer.IdleTimeout,
 	}
 	go r.handleShutDownGracefully(server)
+	pid := os.Getpid()
+	r.Logger.Infof("starting server pid='%d' at port %s.", pid, r.Conf.HttpServer.HostAndPort)
 	if err := server.ListenAndServe(); err != http.ErrServerClosed {
 		r.Logger.Fatalf("error occurred: %s", err)
 	}
