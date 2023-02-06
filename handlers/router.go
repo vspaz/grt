@@ -21,6 +21,13 @@ type Router struct {
 	Conf   *config.Conf
 }
 
+func NewRouter(logger *logrus.Logger, conf *config.Conf) *Router {
+	return &Router{
+		Logger: logger,
+		Conf:   conf,
+	}
+}
+
 func (r *Router) Get(response http.ResponseWriter, request *http.Request) {
 	id := chi.URLParam(request, "id")
 	okBody, _ := json.Marshal(map[string]string{id: "ok"})
