@@ -9,7 +9,6 @@ import (
 	"github.com/vspaz/simplelogger/pkg/logging"
 	"net/http"
 	"strconv"
-	"time"
 )
 
 type Router struct {
@@ -37,7 +36,7 @@ func RegisterHandlers(mux *chi.Mux) *chi.Mux {
 func (r *Router) StartServer(mux *chi.Mux) {
 	grtServer := &http.Server{
 		Addr:         r.Conf.HttpServer.HostAndPort,
-		Handler:      http.TimeoutHandler(mux, time.Second*10, "timeout occurred"),
+		Handler:      http.TimeoutHandler(mux, r.Conf.HttpServer.RequestExecutionTimeout, "timeout occurred"),
 		ReadTimeout:  r.Conf.HttpServer.ReadTimeout,
 		WriteTimeout: r.Conf.HttpServer.WriteTimeout,
 		IdleTimeout:  r.Conf.HttpServer.IdleTimeout,

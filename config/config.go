@@ -23,10 +23,11 @@ type Conf struct {
 }
 
 type HttpServer struct {
-	HostAndPort  string
-	ReadTimeout  time.Duration
-	WriteTimeout time.Duration
-	IdleTimeout  time.Duration
+	HostAndPort             string
+	ReadTimeout             time.Duration
+	WriteTimeout            time.Duration
+	IdleTimeout             time.Duration
+	RequestExecutionTimeout time.Duration
 }
 
 func initConfig() *SingletonConfig {
@@ -37,10 +38,11 @@ func initConfig() *SingletonConfig {
 				Password: os.Getenv("REDIS_PASSWORD"),
 			},
 			HttpServer: &HttpServer{
-				HostAndPort:  ":8080",
-				ReadTimeout:  10 * time.Second,
-				WriteTimeout: 10 * time.Second,
-				IdleTimeout:  10 * time.Second,
+				HostAndPort:             ":8080",
+				ReadTimeout:             10 * time.Second,
+				WriteTimeout:            10 * time.Second,
+				IdleTimeout:             10 * time.Second,
+				RequestExecutionTimeout: 10 * time.Second,
 			},
 		},
 	}
