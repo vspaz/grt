@@ -36,11 +36,11 @@ func RegisterHandlers(mux *chi.Mux) *chi.Mux {
 
 func (r *Router) StartServer(mux *chi.Mux) {
 	grtServer := &http.Server{
-		Addr:         ":8080",
+		Addr:         r.Conf.HttpServer.HostAndPort,
 		Handler:      http.TimeoutHandler(mux, time.Second*10, "timeout occurred"),
-		ReadTimeout:  10,
-		WriteTimeout: 10,
-		IdleTimeout:  10,
+		ReadTimeout:  r.Conf.HttpServer.ReadTimeout,
+		WriteTimeout: r.Conf.HttpServer.WriteTimeout,
+		IdleTimeout:  r.Conf.HttpServer.IdleTimeout,
 	}
 	if err := grtServer.ListenAndServe(); err != nil {
 		r.Logger.Fatalf("error occurred: %s")

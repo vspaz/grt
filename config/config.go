@@ -5,6 +5,7 @@ import (
 	"github.com/go-redis/redis/v8"
 	"os"
 	"sync"
+	"time"
 )
 
 var (
@@ -23,9 +24,9 @@ type Conf struct {
 
 type HttpServer struct {
 	HostAndPort  string
-	ReadTimeout  uint
-	WriteTimeout uint
-	IdleTimeout  uint
+	ReadTimeout  time.Duration
+	WriteTimeout time.Duration
+	IdleTimeout  time.Duration
 }
 
 func initConfig() *SingletonConfig {
@@ -37,9 +38,9 @@ func initConfig() *SingletonConfig {
 			},
 			HttpServer: &HttpServer{
 				HostAndPort:  ":8080",
-				ReadTimeout:  10,
-				WriteTimeout: 10,
-				IdleTimeout:  10,
+				ReadTimeout:  10 * time.Second,
+				WriteTimeout: 10 * time.Second,
+				IdleTimeout:  10 * time.Second,
 			},
 		},
 	}
