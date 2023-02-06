@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"context"
 	"encoding/json"
 	"github.com/go-chi/chi/v5"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -8,7 +9,11 @@ import (
 	"github.com/vspaz/grt/config"
 	"github.com/vspaz/simplelogger/pkg/logging"
 	"net/http"
+	"os"
+	"os/signal"
 	"strconv"
+	"syscall"
+	"time"
 )
 
 type Router struct {
@@ -34,6 +39,22 @@ func RegisterHandlers(mux *chi.Mux) *chi.Mux {
 	mux.Handle("/metrics/", promhttp.Handler())
 	logging.GetTextLogger().Logger.Info("handlers are registered: 'ok'.")
 	return mux
+}
+
+func (r *Router) handleShutDownGracefully(server *http.Server) {
+	signals := []os.Signal{syscall.SIGINT, syscall.SIGTERM}
+	signalChannel := make(chan os.Signal, 1)
+	signal.Notify(signalChannel, signals...)
+
+	<-signalChannel
+
+	ctx, cancel := context.WithTimeout(context.Background(), 200*time.Second)
+	defer cancel()
+
+	if err := server.Shutdown(ctx); err != nil {
+		r.Logger.Errorf("error shutting down server: %s", err)
+	}
+	r.Logger.Info("server stopping")
 }
 
 func (r *Router) StartServer(mux *chi.Mux) {
