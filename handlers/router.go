@@ -22,7 +22,10 @@ func (r *Router) Get(response http.ResponseWriter, request *http.Request) {
 	response.WriteHeader(http.StatusOK)
 	response.Header().Set("Content-Type", "application/json")
 	response.Header().Set("Content-Length", strconv.Itoa(len(okBody)))
-	response.Write(okBody)
+	_, err := response.Write(okBody)
+	if err != nil {
+		r.Logger.Errorf("error occurred: %s", err.Error())
+	}
 }
 
 func RegisterHandlers(mux *chi.Mux) *chi.Mux {
