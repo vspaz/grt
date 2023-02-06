@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	config SingletonConfig
+	config *SingletonConfig
 	once   sync.Once
 )
 
@@ -28,8 +28,8 @@ type HttpServer struct {
 	IdleTimeout  uint
 }
 
-func initConfig() SingletonConfig {
-	return SingletonConfig{
+func initConfig() *SingletonConfig {
+	return &SingletonConfig{
 		Config: &Conf{
 			Redis: &redis.Options{
 				Addr:     fmt.Sprintf("%s:%s", os.Getenv("REDIS_HOST"), os.Getenv("REDIS_PORT")),
@@ -45,7 +45,7 @@ func initConfig() SingletonConfig {
 	}
 }
 
-func GetConfig() SingletonConfig {
+func GetConfig() *SingletonConfig {
 	once.Do(
 		func() {
 			config = initConfig()

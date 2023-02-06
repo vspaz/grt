@@ -5,6 +5,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/sirupsen/logrus"
+	"github.com/vspaz/grt/config"
 	"github.com/vspaz/simplelogger/pkg/logging"
 	"net/http"
 	"strconv"
@@ -13,6 +14,7 @@ import (
 
 type Router struct {
 	Logger *logrus.Logger
+	Conf   *config.Conf
 }
 
 func (r *Router) Get(response http.ResponseWriter, request *http.Request) {
