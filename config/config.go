@@ -17,7 +17,12 @@ type SingletonConfig struct {
 }
 
 type Conf struct {
-	Redis *redis.Options
+	Redis      *redis.Options
+	HttpServer *HttpServer
+}
+
+type HttpServer struct {
+	HostAndPort string
 }
 
 func initConfig() SingletonConfig {
@@ -26,6 +31,9 @@ func initConfig() SingletonConfig {
 			Redis: &redis.Options{
 				Addr:     fmt.Sprintf("%s:%s", os.Getenv("REDIS_HOST"), os.Getenv("REDIS_PORT")),
 				Password: os.Getenv("REDIS_PASSWORD"),
+			},
+			HttpServer: &HttpServer{
+				HostAndPort: ":8080",
 			},
 		},
 	}
