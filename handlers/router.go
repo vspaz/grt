@@ -45,27 +45,26 @@ func (r *Router) handleShutDownGracefully(server *http.Server) {
 	signals := []os.Signal{syscall.SIGINT, syscall.SIGTERM}
 	signalChannel := make(chan os.Signal, 1)
 	signal.Notify(signalChannel, signals...)
-
-	<-signalChannel
-
-	ctx, cancel := context.WithTimeout(context.Background(), 200*time.Second)
+	r.Logger.Infof("'%s' signal received, stopping server...", <-signalChannel)
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Minute)
 	defer cancel()
 
 	if err := server.Shutdown(ctx); err != nil {
 		r.Logger.Errorf("error shutting down server: %s", err)
 	}
-	r.Logger.Info("server stopping")
 }
 
 func (r *Router) StartServer(mux *chi.Mux) {
-	grtServer := &http.Server{
+	server := &http.Server{
 		Addr:         r.Conf.HttpServer.HostAndPort,
 		Handler:      http.TimeoutHandler(mux, r.Conf.HttpServer.RequestExecutionTimeout, "timeout occurred"),
 		ReadTimeout:  r.Conf.HttpServer.ReadTimeout,
 		WriteTimeout: r.Conf.HttpServer.WriteTimeout,
 		IdleTimeout:  r.Conf.HttpServer.IdleTimeout,
 	}
-	if err := grtServer.ListenAndServe(); err != nil {
-		r.Logger.Fatalf("error occurred: %s")
+	go r.handleShutDownGracefully(server)
+	if err := server.ListenAndServe(); err != http.ErrServerClosed {
+		r.Logger.Fatalf("error occurred: %s", err)
 	}
+	r.Logger.Info("server stopped.")
 }
