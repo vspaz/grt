@@ -12,11 +12,11 @@ func Run(binaryName string) {
 	args := cmd.GetCmdArguments(os.Args)
 	globalConfig := config.GetConfig().Config
 	logger := logging.GetTextLogger(args.LogLevel).Logger
+	logger.Infof("grt server build, ver='%s'", binaryName)
 	router := handlers.Router{
 		Logger: logger,
 		Conf:   globalConfig,
 	}
-	logger.Infof("server build, ver='%s'", binaryName)
 	mux := handlers.ConfigureMiddleware(logger)
 	mux = handlers.RegisterHandlers(mux)
 	router.StartServer(mux)
