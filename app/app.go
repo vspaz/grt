@@ -12,7 +12,7 @@ func Run(binaryName string) {
 	args := cmd.GetCmdArguments(os.Args)
 	conf := config.GetConfig().Config
 	logger := logging.GetTextLogger(args.LogLevel).Logger
-	logger.Infof("grt server build, ver='%s'", binaryName)
+	logger.Infof("grt server build='%s'", binaryName)
 	router := handlers.NewRouter(logger, conf)
 	mux := handlers.ConfigureMiddleware(logger)
 	mux = handlers.RegisterHandlers(mux)

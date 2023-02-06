@@ -72,7 +72,7 @@ func (r *Router) StartServer(mux *chi.Mux) {
 	}
 	go r.handleShutDownGracefully(server)
 	pid := os.Getpid()
-	r.Logger.Infof("starting server pid='%d' at port %s.", pid, r.Conf.HttpServer.HostAndPort)
+	r.Logger.Infof("starting server pid='%d' at port '%s'.", pid, r.Conf.HttpServer.HostAndPort)
 	if err := server.ListenAndServe(); err != http.ErrServerClosed {
 		r.Logger.Fatalf("error occurred: %s", err)
 	}
