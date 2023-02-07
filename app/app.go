@@ -16,7 +16,7 @@ func Run(binaryName string) {
 	logger.Infof("grt server build='%s'", binaryName)
 	router := handlers.NewRouter(logger, conf)
 	router.SetRedisClient(redis.NewClient(conf.Redis))
-	mux := router.ConfigureMiddleware(logger)
-	mux = router.RegisterHandlers(mux)
-	router.StartServer(mux)
+	router.ConfigureMiddleware()
+	router.RegisterHandlers()
+	router.StartServer()
 }

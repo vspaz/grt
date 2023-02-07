@@ -8,7 +8,6 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/sirupsen/logrus"
 	"github.com/vspaz/grt/config"
-	"github.com/vspaz/simplelogger/pkg/logging"
 	"net/http"
 	"os"
 	"os/signal"
@@ -22,12 +21,14 @@ type Router struct {
 	Conf        *config.Conf
 	RedisClient *redis.Client
 	redisCtx    context.Context
+	mux         *chi.Mux
 }
 
 func NewRouter(logger *logrus.Logger, conf *config.Conf) *Router {
 	return &Router{
 		Logger: logger,
 		Conf:   conf,
+		mux:    chi.NewRouter(),
 	}
 }
 
@@ -49,12 +50,11 @@ func (r *Router) Get(response http.ResponseWriter, request *http.Request) {
 	}
 }
 
-func (r *Router) RegisterHandlers(mux *chi.Mux) *chi.Mux {
+func (r *Router) RegisterHandlers() {
 	// apiV1Prefix := "/api/v1/"
-	mux.Get("/ping/", Router{}.GetHealthStatus)
-	mux.Handle("/metrics/", promhttp.Handler())
-	logging.GetTextLogger().Logger.Info("handlers are registered: 'ok'.")
-	return mux
+	r.mux.Get("/ping/", Router{}.GetHealthStatus)
+	r.mux.Handle("/metrics/", promhttp.Handler())
+	r.Logger.Info("handlers are registered: 'ok'.")
 }
 
 func (r *Router) handleShutDownGracefully(server *http.Server) {
@@ -71,10 +71,10 @@ func (r *Router) handleShutDownGracefully(server *http.Server) {
 	}
 }
 
-func (r *Router) StartServer(mux *chi.Mux) {
+func (r *Router) StartServer() {
 	server := &http.Server{
 		Addr:         r.Conf.HttpServer.HostAndPort,
-		Handler:      http.TimeoutHandler(mux, r.Conf.HttpServer.RequestExecutionTimeout, "timeout occurred"),
+		Handler:      http.TimeoutHandler(r.mux, r.Conf.HttpServer.RequestExecutionTimeout, "timeout occurred"),
 		ReadTimeout:  r.Conf.HttpServer.ReadTimeout,
 		WriteTimeout: r.Conf.HttpServer.WriteTimeout,
 		IdleTimeout:  r.Conf.HttpServer.IdleTimeout,
