@@ -21,6 +21,7 @@ type Router struct {
 	Logger      *logrus.Logger
 	Conf        *config.Conf
 	RedisClient *redis.Client
+	redisCtx    context.Context
 }
 
 func NewRouter(logger *logrus.Logger, conf *config.Conf) *Router {
@@ -28,6 +29,12 @@ func NewRouter(logger *logrus.Logger, conf *config.Conf) *Router {
 		Logger: logger,
 		Conf:   conf,
 	}
+}
+
+func (r *Router) SetRedisClient(client *redis.Client) {
+	r.RedisClient = client
+	r.redisCtx = context.Background()
+	r.Logger.Info("redis client initialized: 'ok'")
 }
 
 func (r *Router) Get(response http.ResponseWriter, request *http.Request) {
