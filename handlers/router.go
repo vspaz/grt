@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/go-chi/chi/v5"
+	"github.com/go-redis/redis/v8"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/sirupsen/logrus"
 	"github.com/vspaz/grt/config"
@@ -17,8 +18,9 @@ import (
 )
 
 type Router struct {
-	Logger *logrus.Logger
-	Conf   *config.Conf
+	Logger      *logrus.Logger
+	Conf        *config.Conf
+	RedisClient *redis.Client
 }
 
 func NewRouter(logger *logrus.Logger, conf *config.Conf) *Router {
