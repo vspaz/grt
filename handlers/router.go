@@ -24,7 +24,7 @@ type Router struct {
 	mux         *chi.Mux
 }
 
-func NewRouter(logger *logrus.Logger, conf *config.Conf) *Router {
+func NewRouter(conf *config.Conf, logger *logrus.Logger) *Router {
 	return &Router{
 		Logger: logger,
 		Conf:   conf,
