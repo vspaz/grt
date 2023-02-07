@@ -8,7 +8,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func ConfigureMiddleware(loggger *logrus.Logger) *chi.Mux {
+func (r *Router) ConfigureMiddleware(loggger *logrus.Logger) *chi.Mux {
 	mux := chi.NewRouter()
 	mux.Use(middleware.Recoverer)
 	mux.Use(middleware.RealIP)
