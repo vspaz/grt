@@ -49,6 +49,7 @@ func (r *Router) SetHttpClient(client *ghttp.GoatClient) {
 
 func (r *Router) SetRabbitMqConnection(connection *rmq.Connection) {
 	r.connection = connection
+	r.Logger.Info("rabbitmq connection is set: 'ok'")
 }
 
 func (r *Router) Get(response http.ResponseWriter, request *http.Request) {
