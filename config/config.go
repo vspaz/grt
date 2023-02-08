@@ -18,9 +18,9 @@ type SingletonConfig struct {
 }
 
 type Conf struct {
-	Redis      *redis.Options
-	HttpServer *HttpServer
-	RabbitMq   string
+	Redis    *redis.Options
+	Http     *Http
+	RabbitMq string
 }
 
 type Server struct {
@@ -35,8 +35,8 @@ type Client struct {
 }
 
 type Http struct {
-	Server
-	Client
+	*Client
+	*Server
 }
 
 type HttpServer struct {
@@ -54,12 +54,15 @@ func initConfig() *SingletonConfig {
 				Addr:     fmt.Sprintf("%s:%s", os.Getenv("REDIS_HOST"), os.Getenv("REDIS_PORT")),
 				Password: os.Getenv("REDIS_PASSWORD"),
 			},
-			HttpServer: &HttpServer{
-				HostAndPort:             ":8080",
-				ReadTimeout:             10 * time.Second,
-				WriteTimeout:            10 * time.Second,
-				IdleTimeout:             10 * time.Second,
-				RequestExecutionTimeout: 10 * time.Second,
+			Http: &Http{
+				Client: &Client{},
+				Server: &Server{
+					HostAndPort:             ":8080",
+					ReadTimeout:             10 * time.Second,
+					WriteTimeout:            10 * time.Second,
+					IdleTimeout:             10 * time.Second,
+					RequestExecutionTimeout: 10 * time.Second,
+				},
 			},
 			RabbitMq: "",
 		},
