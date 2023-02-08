@@ -40,6 +40,10 @@ func (r *Router) SetRedisClient(client *redis.Client) {
 	r.Logger.Info("redis client initialized: 'ok'")
 }
 
+func (r *Router) SetHttpClient(client *ghttp.GoatClient) {
+	r.httpClient = client
+}
+
 func (r *Router) Get(response http.ResponseWriter, request *http.Request) {
 	id := chi.URLParam(request, "id")
 	okBody, _ := json.Marshal(map[string]string{id: "ok"})
