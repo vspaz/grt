@@ -32,6 +32,18 @@ type Server struct {
 }
 
 type Client struct {
+	Host      string
+	UserAgent string
+	Retries   struct {
+		Count    int
+		Delay    float64
+		OnErrors []int
+	}
+	Timeouts struct {
+		Response    time.Duration
+		Connection  time.Duration
+		HeadersRead time.Duration
+	}
 }
 
 type Http struct {
