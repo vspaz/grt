@@ -7,6 +7,7 @@ import (
 	"github.com/go-redis/redis/v8"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/sirupsen/logrus"
+	"github.com/vspaz/goat/pkg/ghttp"
 	"github.com/vspaz/grt/config"
 	"net/http"
 	"os"
@@ -22,6 +23,7 @@ type Router struct {
 	RedisClient *redis.Client
 	redisCtx    context.Context
 	mux         *chi.Mux
+	httpClient  *ghttp.GoatClient
 }
 
 func NewRouter(conf *config.Conf, logger *logrus.Logger) *Router {
