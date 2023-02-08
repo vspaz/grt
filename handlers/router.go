@@ -42,6 +42,7 @@ func (r *Router) SetRedisClient(client *redis.Client) {
 
 func (r *Router) SetHttpClient(client *ghttp.GoatClient) {
 	r.httpClient = client
+	r.Logger.Info("http client is initialized: 'ok'")
 }
 
 func (r *Router) Get(response http.ResponseWriter, request *http.Request) {
