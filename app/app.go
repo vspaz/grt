@@ -6,6 +6,7 @@ import (
 	"github.com/vspaz/grt/cmd"
 	"github.com/vspaz/grt/config"
 	"github.com/vspaz/grt/handlers"
+	"github.com/vspaz/rmqclient/pkg/rmq"
 	"github.com/vspaz/simplelogger/pkg/logging"
 	"os"
 )
@@ -19,6 +20,7 @@ func Run(binaryName string) {
 	httpClient := ghttp.NewClientBuilder().Build()
 	router.SetHttpClient(httpClient)
 	router.SetRedisClient(redis.NewClient(conf.Redis))
+	_ = rmq.NewConnection(conf.RabbitMq, logger)
 	router.ConfigureMiddleware()
 	router.RegisterHandlers()
 	router.StartServer()
