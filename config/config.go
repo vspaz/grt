@@ -20,6 +20,7 @@ type SingletonConfig struct {
 type Conf struct {
 	Redis      *redis.Options
 	HttpServer *HttpServer
+	RabbitMq   string
 }
 
 type HttpServer struct {
@@ -44,6 +45,7 @@ func initConfig() *SingletonConfig {
 				IdleTimeout:             10 * time.Second,
 				RequestExecutionTimeout: 10 * time.Second,
 			},
+			RabbitMq: "",
 		},
 	}
 }
