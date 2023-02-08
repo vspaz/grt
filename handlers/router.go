@@ -9,6 +9,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"github.com/vspaz/goat/pkg/ghttp"
 	"github.com/vspaz/grt/config"
+	"github.com/vspaz/rmqclient/pkg/rmq"
 	"net/http"
 	"os"
 	"os/signal"
@@ -24,6 +25,7 @@ type Router struct {
 	redisCtx    context.Context
 	mux         *chi.Mux
 	httpClient  *ghttp.GoatClient
+	connection  *rmq.Connection
 }
 
 func NewRouter(conf *config.Conf, logger *logrus.Logger) *Router {
