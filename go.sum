@@ -57,6 +57,8 @@ github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/
 github.com/stretchr/testify v1.8.0 h1:pSgiaMZlXftHpm5L7V1+rVB+AZJydKsMxsQBIJw4PKk=
 github.com/vspaz/goat v1.2.1 h1:CocghnTPU0NO8UsWnLJRh49ngriRkEV8MG727ww8x8E=
 github.com/vspaz/goat v1.2.1/go.mod h1:yBi+IAksPpNY562RyBLakyod96ZBTaovozAalYepHO4=
+github.com/vspaz/goat v1.3.1 h1:vNarHTtE+rey39CqITIzQ2bYukQT6fIOpk0/JTh5JUw=
+github.com/vspaz/goat v1.3.1/go.mod h1:isV9111xR4ulA3nTRA91Ljj5Ly6wh5GKlZRugq5xHRU=
 github.com/vspaz/rmqclient v0.0.0-20230204003423-4c3a2cc74f98 h1:CIe8U0NYgv6GnzqMa0K9vhvjw+NiYno/6DXAPfdMcig=
 github.com/vspaz/rmqclient v0.0.0-20230204003423-4c3a2cc74f98/go.mod h1:Wnug+qM6KSSctyk8972W7A3IZfwOoQCZCGXVwT5qz/4=
 github.com/vspaz/simplelogger v0.1.0 h1:R6VTMxvvBbH8KWDpectnuWar0S/mflhBxXCBoQJv+tw=

@@ -9,7 +9,7 @@ require (
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/prometheus/client_golang v1.14.0
 	github.com/sirupsen/logrus v1.9.0
-	github.com/vspaz/goat v1.2.1
+	github.com/vspaz/goat v1.3.1
 	github.com/vspaz/rmqclient v0.0.0-20230204003423-4c3a2cc74f98
 	github.com/vspaz/simplelogger v0.1.0
 )
