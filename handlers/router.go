@@ -47,6 +47,10 @@ func (r *Router) SetHttpClient(client *ghttp.GoatClient) {
 	r.Logger.Info("http client is initialized: 'ok'")
 }
 
+func (r *Router) SetRabbitMqConnection(connection *rmq.Connection) {
+	r.connection = connection
+}
+
 func (r *Router) Get(response http.ResponseWriter, request *http.Request) {
 	id := chi.URLParam(request, "id")
 	okBody, _ := json.Marshal(map[string]string{id: "ok"})
