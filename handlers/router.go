@@ -73,14 +73,14 @@ func (r *Router) handleShutDownGracefully(server *http.Server) {
 
 func (r *Router) StartServer() {
 	server := &http.Server{
-		Addr:         r.Conf.HttpServer.HostAndPort,
-		Handler:      http.TimeoutHandler(r.mux, r.Conf.HttpServer.RequestExecutionTimeout, "timeout occurred"),
-		ReadTimeout:  r.Conf.HttpServer.ReadTimeout,
-		WriteTimeout: r.Conf.HttpServer.WriteTimeout,
-		IdleTimeout:  r.Conf.HttpServer.IdleTimeout,
+		Addr:         r.Conf.Http.Server.HostAndPort,
+		Handler:      http.TimeoutHandler(r.mux, r.Conf.Http.Server.RequestExecutionTimeout, "timeout occurred"),
+		ReadTimeout:  r.Conf.Http.Server.ReadTimeout,
+		WriteTimeout: r.Conf.Http.Server.WriteTimeout,
+		IdleTimeout:  r.Conf.Http.Server.IdleTimeout,
 	}
 	go r.handleShutDownGracefully(server)
-	r.Logger.Infof("starting server pid='%d' at port '%s'.", os.Getpid(), r.Conf.HttpServer.HostAndPort)
+	r.Logger.Infof("starting server pid='%d' at port '%s'.", os.Getpid(), r.Conf.Http.Server.HostAndPort)
 	if err := server.ListenAndServe(); err != http.ErrServerClosed {
 		r.Logger.Fatalf("error occurred: %s", err)
 	}
