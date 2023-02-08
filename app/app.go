@@ -15,10 +15,9 @@ func Run(binaryName string) {
 	conf := config.GetConfig().Config
 	logger := logging.GetTextLogger(args.LogLevel).Logger
 	logger.Infof("grt server build='%s'", binaryName)
-
 	router := handlers.NewRouter(conf, logger)
-	httpClient := ghttp.NewClientBuilder()
-	logger.Info(httpClient)
+	httpClient := ghttp.NewClientBuilder().Build()
+	router.SetHttpClient(httpClient)
 	router.SetRedisClient(redis.NewClient(conf.Redis))
 	router.ConfigureMiddleware()
 	router.RegisterHandlers()
