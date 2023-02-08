@@ -23,6 +23,22 @@ type Conf struct {
 	RabbitMq   string
 }
 
+type Server struct {
+	HostAndPort             string
+	ReadTimeout             time.Duration
+	WriteTimeout            time.Duration
+	IdleTimeout             time.Duration
+	RequestExecutionTimeout time.Duration
+}
+
+type Client struct {
+}
+
+type Http struct {
+	Server
+	Client
+}
+
 type HttpServer struct {
 	HostAndPort             string
 	ReadTimeout             time.Duration
