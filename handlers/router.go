@@ -66,8 +66,9 @@ func (r *Router) Get(response http.ResponseWriter, request *http.Request) {
 
 func (r *Router) RegisterHandlers() {
 	// apiV1Prefix := "/api/v1/"
-	r.mux.Get("/ping/", r.GetHealthStatus)
 	r.mux.Get("/ping", r.GetHealthStatus)
+	r.mux.Get("/ping/", r.GetHealthStatus)
+	r.mux.Handle("/metrics", promhttp.Handler())
 	r.mux.Handle("/metrics/", promhttp.Handler())
 	r.Logger.Info("handlers are registered: 'ok'.")
 }
