@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-func (r Router) GetHealthStatus(response http.ResponseWriter, request *http.Request) {
+func (r *Router) GetHealthStatus(response http.ResponseWriter, request *http.Request) {
 	render.Status(request, http.StatusOK)
 	render.JSON(response, request, map[string]string{"ping": "pong"})
 }
