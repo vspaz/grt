@@ -64,6 +64,16 @@ func (r *Router) Get(response http.ResponseWriter, request *http.Request) {
 	}
 }
 
+func (r *Router) Index(response http.ResponseWriter, request *http.Request) {
+	okBody := []byte("home")
+	response.WriteHeader(http.StatusOK)
+	response.Header().Set("Content-Length", strconv.Itoa(len(okBody)))
+	_, err := response.Write(okBody)
+	if err != nil {
+		r.Logger.Errorf("error occurred: %s", err.Error())
+	}
+}
+
 func (r *Router) RegisterHandlers() {
 	// apiV1Prefix := "/api/v1/"
 	r.mux.Get("/ping", r.GetHealthStatus)
