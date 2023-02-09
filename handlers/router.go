@@ -65,7 +65,7 @@ func (r *Router) Get(response http.ResponseWriter, request *http.Request) {
 }
 
 func (r *Router) Index(response http.ResponseWriter, request *http.Request) {
-	okBody := []byte("home")
+	okBody := []byte("Ok")
 	response.WriteHeader(http.StatusOK)
 	response.Header().Set("Content-Length", strconv.Itoa(len(okBody)))
 	_, err := response.Write(okBody)
@@ -75,11 +75,15 @@ func (r *Router) Index(response http.ResponseWriter, request *http.Request) {
 }
 
 func (r *Router) RegisterHandlers() {
-	// apiV1Prefix := "/api/v1/"
+	apiV1Prefix := "/api/v1/"
+	r.mux.Get("/", r.Index)
+	r.mux.Get(apiV1Prefix, r.Index)
+
 	r.mux.Get("/ping", r.GetHealthStatus)
 	r.mux.Get("/ping/", r.GetHealthStatus)
 	r.mux.Handle("/metrics", promhttp.Handler())
 	r.mux.Handle("/metrics/", promhttp.Handler())
+
 	r.Logger.Info("handlers are registered: 'ok'.")
 }
 
