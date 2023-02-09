@@ -11,7 +11,6 @@ func (r *Router) ConfigureMiddleware() {
 	r.mux.Use(middleware.RealIP)
 	r.mux.Use(middleware.RequestID)
 	r.mux.Use(logger.Logger("http-loggger", r.Logger))
-	r.mux.Use(middleware.Heartbeat("/ping"))
 	r.mux.Use(render.SetContentType(render.ContentTypeJSON))
 	r.Logger.Info("middleware is configured: 'ok'.")
 }
