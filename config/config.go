@@ -31,19 +31,22 @@ type Server struct {
 	RequestExecutionTimeout time.Duration
 }
 
+type Retries struct {
+	Count    int
+	Delay    float64
+	OnErrors []int
+}
+
+type Timeouts struct {
+	Response    time.Duration
+	Connection  time.Duration
+	HeadersRead time.Duration
+}
 type Client struct {
 	Host      string
 	UserAgent string
-	Retries   struct {
-		Count    int
-		Delay    float64
-		OnErrors []int
-	}
-	Timeouts struct {
-		Response    time.Duration
-		Connection  time.Duration
-		HeadersRead time.Duration
-	}
+	Retries   Retries
+	Timeouts  Timeouts
 }
 
 type Http struct {
