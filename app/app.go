@@ -17,7 +17,14 @@ func Run(binaryName string) {
 	logger := logging.GetTextLogger(args.LogLevel).Logger
 	logger.Infof("grt server build='%s'", binaryName)
 	router := handlers.NewRouter(conf, logger)
-	httpClient := ghttp.NewClientBuilder().Build()
+	httpClient := ghttp.NewClientBuilder().
+		WithHost(conf.Http.Client.Host).
+		WithUserAgent(conf.Http.Client.UserAgent).
+		WithConnectionTimeout(conf.Http.Client.Timeouts.Connection).
+		WithResponseTimeout(conf.Http.Client.Timeouts.Response).
+		WithRetry(conf.Http.Client.Retries.Count, conf.Http.Client.Retries.OnErrors).
+		WithDelay(conf.Http.Client.Retries.Delay).
+		Build()
 	router.SetHttpClient(httpClient)
 	router.SetRedisClient(redis.NewClient(conf.Redis))
 	rabbitMqConnection := rmq.NewConnection(conf.RabbitMq, logger)

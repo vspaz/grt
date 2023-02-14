@@ -38,10 +38,11 @@ type Retries struct {
 }
 
 type Timeouts struct {
-	Response    time.Duration
-	Connection  time.Duration
-	HeadersRead time.Duration
+	Response    float64
+	Connection  float64
+	HeadersRead float64
 }
+
 type Client struct {
 	Host      string
 	UserAgent string
@@ -79,9 +80,9 @@ func initConfig() *SingletonConfig {
 						OnErrors: []int{500, 503},
 					},
 					Timeouts: &Timeouts{
-						Connection:  10 * time.Second,
-						Response:    10 * time.Second,
-						HeadersRead: 5 * time.Second,
+						Connection:  10,
+						Response:    10,
+						HeadersRead: 5,
 					},
 				},
 				Server: &Server{
