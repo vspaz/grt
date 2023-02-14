@@ -45,8 +45,8 @@ type Timeouts struct {
 type Client struct {
 	Host      string
 	UserAgent string
-	Retries   Retries
-	Timeouts  Timeouts
+	Retries   *Retries
+	Timeouts  *Timeouts
 }
 
 type Http struct {
@@ -70,7 +70,20 @@ func initConfig() *SingletonConfig {
 				Password: os.Getenv("REDIS_PASSWORD"),
 			},
 			Http: &Http{
-				Client: &Client{},
+				Client: &Client{
+					Host:      "",
+					UserAgent: "grt",
+					Retries: &Retries{
+						Count:    3,
+						Delay:    0.2,
+						OnErrors: []int{500, 503},
+					},
+					Timeouts: &Timeouts{
+						Connection:  10 * time.Second,
+						Response:    10 * time.Second,
+						HeadersRead: 5 * time.Second,
+					},
+				},
 				Server: &Server{
 					HostAndPort:             ":8080",
 					ReadTimeout:             10 * time.Second,
