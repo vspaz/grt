@@ -29,3 +29,11 @@ download:
 upgrade:
 	go mod tidy
 	go get -u all ./...
+
+.PHONY: build-image
+build-image:
+	 docker build -t grt .
+
+.PHONY: run-image
+run-image:
+	docker run -dp 8080:8080 grt
