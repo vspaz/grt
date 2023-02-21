@@ -9,16 +9,16 @@ RUN apt-get update && apt-get upgrade -y \
         less \
         telnet \
         curl \
-        net-tools
+        net-tools\
+        upx-ucl
 
 COPY go.mod .
 COPY go.sum .
 
-RUN go mod download
-
 COPY . .
 
-RUN go build -o grt
+RUN make download
+RUN make build
 
 EXPOSE 8080
 

@@ -21,6 +21,10 @@ style-fix:
 lint:
 	golangci-lint run
 
+.PHONY: download
+download:
+	go mod download
+
 .PHONY: upgrade
 upgrade:
 	go mod tidy
