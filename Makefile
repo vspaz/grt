@@ -37,3 +37,11 @@ build-image:
 .PHONY: run-image
 run-image:
 	docker run -dp 8080:8080 grt
+
+.PHONY: stop-image
+stop-image:
+	docker stop `docker ps -q --filter ancestor=grt`
+
+.PHONY: remove-image
+remove-image:
+	docker rmi -f grt:latest
