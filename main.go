@@ -4,8 +4,8 @@ import (
 	"github.com/vspaz/grt/app"
 )
 
-var binaryName string
+var buildRevision string
 
 func main() {
-	app.Run(binaryName)
+	app.Run(buildRevision)
 }
