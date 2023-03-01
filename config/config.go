@@ -55,14 +55,6 @@ type Http struct {
 	*Server
 }
 
-type HttpServer struct {
-	HostAndPort             string
-	ReadTimeout             time.Duration
-	WriteTimeout            time.Duration
-	IdleTimeout             time.Duration
-	RequestExecutionTimeout time.Duration
-}
-
 func initConfig() *SingletonConfig {
 	return &SingletonConfig{
 		Config: &Conf{
